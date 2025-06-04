@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "website" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "website" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Deploy to gh-pages branch
-      if: github.ref == 'refs/heads/website'
+      if: github.ref == 'refs/heads/main'
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
