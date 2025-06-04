@@ -30,17 +30,29 @@ jobs:
 
     - name: Build project
       run: npm run build
-
+      
     - name: Deploy to gh-pages branch
       if: github.ref == 'refs/heads/main'
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+    
+        # Save dist contents to a temp directory
+        mkdir temp-dist
+        cp -R dist/* temp-dist/
+    
+        # Switch to gh-pages branch
         git fetch origin gh-pages || true
         git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+    
+        # Clean old files
         git rm -rf . || true
-        git push origin gh-pages
-        cp -r dist/* .  # assumes your build output is in ./dist
+    
+        # Restore build output
+        cp -r temp-dist/* ./
+    
+        # Commit and push
         git add .
         git commit -m "Deploy to gh-pages" || echo "No changes to commit"
         git push origin gh-pages
+
