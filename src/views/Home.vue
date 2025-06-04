@@ -21,7 +21,7 @@ onMounted(async () => {
             redirect: "follow"
         };
 
-        fetch("https://raw.githubusercontent.com/Jamie-Poeffel/Gito/registry/templates.json", requestOptions)
+        fetch("https://raw.githubusercontent.com/git-gito/registry-gito/main/templates.json", requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const res = JSON.parse(result);
